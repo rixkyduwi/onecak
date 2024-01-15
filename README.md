@@ -12,6 +12,14 @@ Example: `https://onecak.azurewebsites.net/?lol`
 Shuffle -> Select random posts from database  
 Example: `https://onecak.herokuapp.com/?shuffle=5`
 
+## Update Endpoint (koyeb)
+
+Lol -> 10 Recent stored posts on database  
+Example: `https://meme-bakapedia.koyeb.app/?lol`
+
+Shuffle -> Select random posts from database  
+Example: `https://meme-bakapedia.koyeb.app/?shuffle=5`
+
 ## Info
 
 - **_Heroku maybe deprecated, please use azure instead._**
