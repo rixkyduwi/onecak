@@ -13,11 +13,11 @@ Example: `https://onecak.herokuapp.com/?shuffle=5`
 ## Update Endpoint (koyeb)
 
 Lol -> 10 Recent stored posts on database  
-Example: `https://meme-bakapedia.koyeb.app/?lol`
+Example: `https://meme-bakapedia.koyeb.app/?lol`<br>
 Postman: <br>
 ![10 meme](./Screenshot-1.png)<br>
 Shuffle -> Select random posts from database 
-Example: `https://meme-bakapedia.koyeb.app/?shuffle=1`
+Example: `https://meme-bakapedia.koyeb.app/?shuffle=1`<br>
 Postman:<br>
 ![1 meme](./Screenshot-2.png)<br>
 ## Info
