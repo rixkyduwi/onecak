@@ -66,8 +66,64 @@ class OnecakAPI(Resource):
                 "post recorded": self.length
             }
         })
+        
+class UpdatedOnecakAPI(Resource):
+    def __init__(self):
+        self.database = crud.OnecakDB()
+        self.tasks = json.loads(self.database.run_command(crud.tasks_get))[0]
+        self.length = self.tasks['length']
+        self.lastPost = self.tasks['recent_post']
+        self.lastScan = self.tasks['last_scan']
+        self.parser = reqparse.RequestParser()
 
+    def get(self):
+        result = []
+        
+        lol = None if request.args.get('lol') is None else 1
+        shuffle = 1 if request.args.get('shuffle') == '' else request.args.get('shuffle')
+        shuffle = int(shuffle) if isinstance(shuffle, str) else shuffle
+
+        if lol:
+            for indx in range(self.length, self.length-10, -1):
+                data = self.database.run_command(crud.posts_get, (str(indx),))
+                data = json.loads(data)
+                result.append(data[0])
+            return jsonify({
+                "length": len(result),
+                "posts": result,
+                "lastpost": self.lastPost
+            })
+
+        elif shuffle:
+            shuffle = 10 if shuffle > 10 else shuffle
+            loop = 0
+            while True:
+                random = randint(1, self.length)
+                data = self.database.run_command(crud.posts_get, (str(random),))
+                data = json.loads(data)
+                result.append(data[0])
+                loop += 1
+                if loop >= shuffle: break
+            return jsonify({
+                "length": len(result),
+                "posts": result,
+                "lastpost": self.lastPost
+            })
+
+        return jsonify({
+            "name": "onecak",
+            "credit": "https://1cak.com",
+            "license": "MIT",
+            "sourcecode": "https://github.com/dickymuliafiqri/onecak",
+            "stats":{
+                "recent post": self.lastPost,
+                "last scan": self.lastScan,
+                "post recorded": self.length
+            }
+        })
 api.add_resource(OnecakAPI, '/')
+# update so that User don't have to send json
+api.add_resource(UpdatedOnecakAPI, '/new')
 
 @onecak.errorhandler(HTTPException)
 def exception_handler(e):
