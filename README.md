@@ -20,6 +20,14 @@ Shuffle -> Select random posts from database <br>
 Example: `https://meme-bakapedia.koyeb.app/?shuffle=1`<br>
 Postman:<br>
 ![1 meme](./Screenshot-2.png)<br>
+
+## Endpoint With No Json to send (koyeb)
+Lol -> 10 Recent stored posts on database  
+Example: `https://meme-bakapedia.koyeb.app/new?lol`<br>
+Shuffle -> Select random posts from database <br>
+Example: `https://meme-bakapedia.koyeb.app/new?shuffle=1`<br>
+
+
 ## Info
 
 - **_Heroku maybe deprecated, please use azure instead._**
