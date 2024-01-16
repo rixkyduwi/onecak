@@ -1,11 +1,10 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from random import randint
 from flask_restful import reqparse, Api, Resource
 from werkzeug.exceptions import HTTPException
 import json
 import os
 import crud
-import request
 
 onecak = Flask(__name__)
 api = Api(onecak)
