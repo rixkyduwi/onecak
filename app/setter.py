@@ -22,8 +22,11 @@ def getRecent():
     soup = bs(content, 'html.parser')
     recent = soup.find('a', target="_blank")
     postId = (recent['href']).replace('/', '')
-    return int(postId)
-
+    # filter ke post terbaru (walaupun beberapa post dibawah id 3 jt masih ada yang aktif namun kebanyakan sudah diblok gambar di cdn juga
+    if postId>=3000000:
+        return int(postId)
+    else:
+        break
 def onecak(postId):
     posts = None
     post = None
