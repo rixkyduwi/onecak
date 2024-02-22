@@ -17,16 +17,16 @@ session = {
 def getRecent():
     url = 'https://1cak.com/lol/'
     page = requests.get(url, cookies=session)
-    if not page.status_code == 200: raise Exception(page.status_code)
+    if not page.status_code == 200:
+        raise Exception(page.status_code)
     content = page.content
     soup = bs(content, 'html.parser')
     recent = soup.find('a', target="_blank")
     postId = (recent['href']).replace('/', '')
-    # filter ke post terbaru (walaupun beberapa post dibawah id 3 jt masih ada yang aktif namun kebanyakan sudah diblok gambar di cdn juga)
-    if postId>=3000000:
-        return int(postId)
+    if int(postId) >= 3000000:
+        return postId  # Mengembalikan ke string
     else:
-        break
+        return None
 def onecak(postId):
     posts = None
     post = None
@@ -65,25 +65,26 @@ def onecak(postId):
         postTitle = post['title']
 
     database.run_command(crud.post_insert, (postId, postTitle, postUrl, postSrc, gif, nsfw))
-
+    
 def main():
     recent = None
     x = 0
+    i = 1
 
     if database.run_command(crud.tasks_length) == 0:
         database.run_command(crud.task_insert, (0, 0, 0))
     last_scan = database.run_command('SELECT last_scan FROM tasks')
     if last_scan is not None:
-        i = database.run_command('SELECT last_scan FROM tasks')
+        i = last_scan
 
-    i = 1 if i == 0 else i
     try:
         recent = getRecent()
     except Exception as err:
-        print('Failed get recent post on 1cak: ', err)
+        print('Failed to get recent post on 1cak: ', err)
 
     while True:
-        if recent == i: break
+        if recent == i:
+            break
         try:
             onecak(i)
             print('Success: {}{}'.format(baseUrl, i))
@@ -93,15 +94,16 @@ def main():
             posts = database.run_command(crud.posts_length)
             database.run_command(crud.tasks_update, (recent, i, posts, 1))
 
-        i+=1
-        x+=1
+        i += 1
+        x += 1
         sleep(1)
-        if x >= 500: break
+        if x >= 500:
+            break
 
     print('\n\n#####')
     print('Recent post: {}'.format(recent))
     print('Total post: {}'.format(posts))
     print('Process ended')
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
