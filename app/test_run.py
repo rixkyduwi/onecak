@@ -105,5 +105,4 @@ def main():
     print('Total post: {}'.format(posts))
     print('Process ended')
 
-if __name__ == "__main__":
-    main()
+
