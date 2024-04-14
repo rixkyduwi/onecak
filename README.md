@@ -26,7 +26,7 @@ Lol -> 10 Recent stored posts on database
 Example: `https://meme-bakapedia.koyeb.app/new?lol`<br>
 Shuffle -> Select random posts from database <br>
 Example: `https://meme-bakapedia.koyeb.app/new?shuffle=1`<br>
-
+* link is not active request to me if you want to use it https://t.me/rixkyduwi
 
 ## Info
 
